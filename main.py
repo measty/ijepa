@@ -56,13 +56,14 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     num_gpus = len(args.devices)
-    #mp.set_start_method('spawn') # comment out on windows as set by default
+    mp.set_start_method('spawn') # comment out on windows as set by default
 
-#    for rank in range(num_gpus):
-#        mp.Process(
-#            target=process_main,
-#            args=(rank, args.fname, num_gpus, args.devices)
-#        ).start()
-
-    # assume we are running on a single gpu
-    process_main(0, args.fname, num_gpus, args.devices)
+    if num_gpus > 1:
+        for rank in range(num_gpus):
+            mp.Process(
+                target=process_main,
+                args=(rank, args.fname, num_gpus, args.devices)
+            ).start()
+    else:
+        # assume we are running on a single gpu
+        process_main(0, args.fname, num_gpus, args.devices)

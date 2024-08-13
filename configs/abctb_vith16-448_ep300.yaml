@@ -1,12 +1,12 @@
 data:
-  batch_size: 4
-  color_jitter_strength: 0.0
+  batch_size: 64
+  color_jitter_strength: 0.1
   crop_scale:
   - 0.3
   - 1.0
   crop_size: 448
   image_folder: E:\ABCTB\June-2022
-  num_workers: 2
+  num_workers: 6
   pin_mem: true
   root_path: E:\ABCTB\
   use_color_distortion: false
@@ -42,11 +42,11 @@ optimization:
   ema:
   - 0.996
   - 1.0
-  epochs: 300
+  epochs: 100
   final_lr: 1.0e-06
   final_weight_decay: 0.4
   ipe_scale: 1.0
-  lr: 0.001
+  lr: 0.007
   start_lr: 0.0002
-  warmup: 40
+  warmup: 10
   weight_decay: 0.04
