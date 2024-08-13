@@ -30,7 +30,6 @@ def make_abctb(
     subset_file=None
 ):
     dataset = ABCTBFolder(
-        root=root_path,
         image_folder=image_folder,
         transform=transform,
         train=training,
@@ -85,7 +84,16 @@ class ABCTBFolder(WSIFolderPatchDataset):
         data_path = None
         logger.info(f'data-path {data_path}')
 
-        super(WSIFolderPatchDataset, self).__init__(root=data_path, transform=transform)
+        super().__init__(
+                        [image_folder],
+                        [r"E:\ABCTB\jun_2022_masks"], 
+                         patch_input_shape=(448, 448), 
+                         stride_shape=(448, 448),
+                         preproc_func=transform, 
+                         min_mask_ratio=0.8,
+                         resolution=0.5,
+                         units='mpp',
+                         )
         logger.info('Initialized ImageNet')
 
         if index_targets:

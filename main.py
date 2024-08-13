@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     '--fname', type=str,
     help='name of config file to load',
-    default='configs.yaml')
+    default='configs/abctb_vith16-448_ep300.yaml')
 parser.add_argument(
     '--devices', type=str, nargs='+', default=['cuda:0'],
     help='which devices to use on local machine')
@@ -56,10 +56,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     num_gpus = len(args.devices)
-    mp.set_start_method('spawn')
+    #mp.set_start_method('spawn') # comment out on windows as set by default
 
-    for rank in range(num_gpus):
-        mp.Process(
-            target=process_main,
-            args=(rank, args.fname, num_gpus, args.devices)
-        ).start()
+#    for rank in range(num_gpus):
+#        mp.Process(
+#            target=process_main,
+#            args=(rank, args.fname, num_gpus, args.devices)
+#        ).start()
+
+    # assume we are running on a single gpu
+    process_main(0, args.fname, num_gpus, args.devices)
